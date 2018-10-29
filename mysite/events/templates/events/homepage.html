@@ -1,21 +1,35 @@
 <html>
+<head>
+<style>
+.left_header {
+	text-align: left;
+}
+
+.right_header {
+	position: fixed;
+	top: 20px;
+	right: 0;
+	width: 300px;
+}
+</style>
+</head>	
 
 <body>
 
 <table class="header">
 	<tr>
 		<th class="left_header">
-			<form action="OrgReq/">
+			<form>
 				<input type="submit" value="Filter" />
 			</form>
 		</th>
 		<th class="left_header">
-			<form action="OrgReq/">
+			<form action="{% url 'MyOrgs'%}">
 				<input type="submit" value="My Orgs" />
 			</form>
 		</th>
 		<th class="left_header">
-			<form action="OrgReq/">
+			<form action="{% url 'OrgReq'%}">
 				<input type="submit" value="Request Org" />
 			</form>
 		</th>
@@ -26,15 +40,6 @@
 <center>
 <table border="20" cellspacing="10" cellpadding="15">
 <br>
-{% if org %}
-    <ul>
-    {% for Organization in org %}
-        <li><a href="/events/{{ Organization.Org_ID }}/">{{ Organization.Short_Name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No Orgs are available.</p>
-{% endif %}
 <ALIGN=center><font face="Copperplate Gothic Bold"><font size ="6"><B>October 2018</B></font></TD> 		
 	<tr>
 	<td><font face="Copperplate Gothic Bold"><font size ="4">Sunday</font></td>
@@ -49,7 +54,7 @@
 	<tr>
 	<td></td>
 	<td><font face="Copperplate Gothic Bold"><font size ="4">1</font></td>
-	<td><font face="Copperplate Gothic Bold"><font size ="4"><a href="birthmonthp2.html"><span style="background-color: red">2</span></a></font></td>
+	<td><font face="Copperplate Gothic Bold"><font size ="4">2</font></td>
 	<td><font face="Copperplate Gothic Bold"><font size ="4">3</font></td>
 	<td><font face="Copperplate Gothic Bold"><font size ="4">4</font></td>
 	<td><font face="Copperplate Gothic Bold"><font size ="4">5</font></td>
