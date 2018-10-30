@@ -10,11 +10,11 @@ from django.test import Client
 from .tables import OrgTable
 
 def homepage(request):
-    return render(request, 'events/homepage.html',)
+    return render(request, 'homepage.html',{})
 	
 def myorgs(request):
 	table = OrgTable(Organization.objects.all())
-	return render(request, 'events/myOrgs.html', {'table': table})
+	return render(request, 'myOrgs.html', {'table': table})
 	
 def OrgReqFormView(request):
     if request.method == 'POST':
@@ -25,10 +25,10 @@ def OrgReqFormView(request):
             Full_Name = data.get('Full_Name')
             Description = data.get('Description')
             org = Organization.objects.create(Short_Name=Short_Name, Full_Name=Full_Name, Description=Description)
-            return HttpResponseRedirect('/events/homepage') 
+            return HttpResponseRedirect('/homepage') 
     else:
         form = OrgReqForm()
-    return render(request, 'events/form.html', {'form': form})
+    return render(request, 'form.html', {'form': form})
 	
 def EventFormView(request):
     if request.method == 'POST':
@@ -42,7 +42,7 @@ def EventFormView(request):
             Org_ID = data.get('Org_ID')
             Eval_Key = data.get('Eval_Key')
             org = Organization.objects.create(Name=Name, Date_Time=Date_Time, Venue=Venue, Description=Description, Org_ID=Org_ID, Eval_Key=Eval_Key)
-            return HttpResponseRedirect('/events/homepage') 
+            return HttpResponseRedirect('/homepage') 
     else:
         form = EventForm()
-    return render(request, 'events/form.html', {'form': form})
+    return render(request, 'form.html', {'form': form})
