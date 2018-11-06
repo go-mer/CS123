@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <html>
 <head>
 <style>
@@ -16,26 +19,6 @@
 
 <body>
 
-<table class="header">
-	<tr>
-		<th class="left_header">
-			<form>
-				<input type="submit" value="Filter" />
-			</form>
-		</th>
-		<th class="left_header">
-			<form action="{% url 'MyOrgs'%}">
-				<input type="submit" value="My Orgs" />
-			</form>
-		</th>
-		<th class="left_header">
-			<form action="{% url 'OrgReq'%}">
-				<input type="submit" value="Request Org" />
-			</form>
-		</th>
-		<th class="right_header"><input type="text"><input type="submit"></th>
-	</tr>
-</table>
 
 <center>
 <table border="20" cellspacing="10" cellpadding="15">
@@ -105,3 +88,4 @@
 
 </body>
 </html>
+{% endblock %}

@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <html>
 <head>
 <style>
@@ -21,20 +24,6 @@ tr:nth-child(even) {
 
 <body>
 
-<table class="header">
-	<tr>
-		<th class="left_header">
-			<form action="{% url 'Homepage'%}">
-				<input type="submit" value="Home" />
-			</form>
-		</th>
-		<th class="left_header">
-			<form action="{% url 'EventSched'%}">
-				<input type="submit" value="Schedule Event" />
-			</form>
-		</th>
-	</tr>
-</table>
 
 <center>
 <table>
@@ -78,3 +67,4 @@ tr:nth-child(even) {
 
 </body>
 </html>
+{% endblock %}
