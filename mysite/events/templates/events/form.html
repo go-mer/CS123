@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="{% url 'Homepage'%}">
-	<input type="submit" value="Home" />
-</form>
 <form method="post" novalidate>
   {% csrf_token %}
 
