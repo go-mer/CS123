@@ -9,6 +9,9 @@ from django.contrib.auth import authenticate, login
 from django.test import Client
 from .tables import OrgTable
 
+def login(request):
+    return render(request, 'events/login.html',)
+
 def homepage(request):
     return render(request, 'events/homepage.html',)
 	

@@ -9,5 +9,6 @@ urlpatterns = [
 	path('orgReq/', views.OrgReqFormView, name='OrgReq'),
     path('myOrgs/', views.myorgs, name='MyOrgs'),
 	path('myOrgs/eventSched/', views.EventFormView, name='EventSched'),
+	path('login', views.login, name='Login'),
 ]
 
