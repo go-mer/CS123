@@ -10,5 +10,6 @@ urlpatterns = [
     path('myOrgs/', views.myorgs, name='MyOrgs'),
 	path('myOrgs/eventSched/', views.EventFormView, name='EventSched'),
 	path('login', views.login, name='Login'),
+	path('register', views.register, name='Register'),
 ]
 

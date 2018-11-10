@@ -12,6 +12,9 @@ from .tables import OrgTable
 def login(request):
     return render(request, 'events/login.html',)
 
+def register(request):
+    return render(request, 'events/register.html',)
+
 def homepage(request):
     return render(request, 'events/homepage.html',)
 	
