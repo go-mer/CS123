@@ -30,21 +30,30 @@
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'Homepage' %}">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class ="nav-link" href="#">Filter</a>  
-          </li>
-          <li class="nav-item">
-            <a class ="nav-link" href="{% url 'MyOrgs'%}">My Orgs</a> 
-          </li>
-          <li class="nav-item">
-            <a class ="nav-link" href="{% url 'OrgReq'%}">Request Org</a> 
-          </li>
-          <li class="nav-item">
-            <a class ="nav-link" href="{% url 'Login'%}">Login</a> 
-          </li>
-		  <li class="nav-item">
-            <a class ="nav-link" href="{% url 'Register'%}">Register</a> 
-          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class ="nav-link" href="#">Filter</a>  
+            </li>
+            <li class="nav-item">
+              <a class ="nav-link" href="{% url 'MyOrgs'%}">My Orgs</a> 
+            </li>
+            {% if not moderator.exists %}
+              <li class="nav-item">
+                <a class ="nav-link" href="{% url 'OrgReq'%}">Request Org</a> 
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class ="nav-link" href="{% url 'EventSched'%}">Schedule Event</a> 
+              </li>       
+            {% endif %}
+            <li class="nav-item">
+              <a class ="nav-link" href="{% url 'Logout'%}">Logout</a> 
+            </li> 
+          {% else %}			
+		     <li class="nav-item">
+              <a class ="nav-link" href="{% url 'Login'%}">Login</a> 
+            </li> 
+          {% endif %}
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

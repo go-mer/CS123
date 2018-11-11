@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Org Request</h1>
+<h1>Schedule Event for {{ org }}</h1>
 <form method="post" novalidate>
   {% csrf_token %}
 
@@ -27,4 +27,4 @@
 
   <button type="submit">Submit</button>
 </form>
-{% endblock %}  
+{% endblock %}

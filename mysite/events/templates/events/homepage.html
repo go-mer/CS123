@@ -19,7 +19,9 @@
 
 <body>
 
-
+{% if user.is_authenticated %}
+	<p>Welcome {{ user.username }} !!!</p>       
+{% endif %}
 <center>
 <table border="20" cellspacing="10" cellpadding="15">
 <br>
