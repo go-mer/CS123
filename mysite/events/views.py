@@ -4,6 +4,7 @@ from .models import Organization, Moderator, Subscription, Event
 from django_tables2 import RequestConfig
 from django.contrib.auth.models import User
 from django.views.generic import FormView
+from django.db.models import Q
 from .forms import RegisterForm, OrgReqForm, EventForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
@@ -57,6 +58,11 @@ def viewEvent(request):
     id = request.GET.get('id')
     event = Event.objects.filter(Event_ID=id)
     return render(request,'events/viewEvent.html',{'event':event})
+
+def search(request):
+	searchName = request.GET.get('s')
+	results = Organization.objects.filter(Q(Full_Name_icontains=searchName) | Q(Short_Name_icontains=searchName))
+	return render(request, 'events/searchResult.html',{'results':results})
 	
 def OrgReqFormView(request):
     if request.method == 'POST':
