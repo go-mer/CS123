@@ -22,6 +22,8 @@ def loginView(request):
         form = AuthenticationForm()
     return render(request,'events/login.html',{'form':form})
 
+
+
 def logoutView(request):
     logout(request)
     return redirect('Login')
@@ -43,6 +45,10 @@ def registerView(request):
         form = RegisterForm()
     return render(request,'events/register.html',{'form':form})
 	
+def searchView(request):
+    moderator = Moderator.objects.filter(User=request.user)
+    return render(request,'events/search.html',{'moderator':moderator})
+    
 def homepage(request):
     moderator = Moderator.objects.filter(User=request.user)
     return render(request,'events/homepage.html',{'moderator':moderator})

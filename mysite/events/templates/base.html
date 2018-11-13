@@ -35,6 +35,9 @@
               <a class ="nav-link" href="#">Filter</a>  
             </li>
             <li class="nav-item">
+              <a class ="nav-link" href="{% url 'Search'%}">Search Org</a>
+            </li>
+            <li class="nav-item">
               <a class ="nav-link" href="{% url 'MyOrgs'%}">My Orgs</a> 
             </li>
             {% if not moderator.exists %}
@@ -47,18 +50,15 @@
               </li>       
             {% endif %}
             <li class="nav-item">
-              <a class ="nav-link" href="{% url 'Logout'%}">Logout</a> 
+              <a class ="nav-link " href="{% url 'Logout'%}">Logout</a> 
             </li> 
           {% else %}			
 		     <li class="nav-item">
               <a class ="nav-link" href="{% url 'Login'%}">Login</a> 
             </li> 
           {% endif %}
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        
+      </ul>
       </div>
     </nav>
 {% block content %}

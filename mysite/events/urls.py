@@ -12,4 +12,5 @@ urlpatterns = [
 	url(r'^orgReq/$', views.OrgReqFormView, name='OrgReq'),
     url(r'^myOrgs/$', views.myOrgs, name='MyOrgs'),
 	url(r'^eventSched/$', views.EventFormView, name='EventSched'),
+	url(r'^search/$', views.searchView, name='Search'),
 ]
