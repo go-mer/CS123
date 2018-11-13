@@ -60,8 +60,8 @@ def viewEvent(request):
     return render(request,'events/viewEvent.html',{'event':event})
 
 def search(request):
-	searchName = request.GET.get('s')
-	results = Organization.objects.filter(Q(Full_Name_icontains=searchName) | Q(Short_Name_icontains=searchName))
+	query = request.GET.get('q')
+	results = Organization.objects.filter(Q(Full_Name_icontains=query) | Q(Short_Name_icontains=query))
 	return render(request, 'events/searchResult.html',{'results':results})
 	
 def OrgReqFormView(request):
