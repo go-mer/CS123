@@ -1,9 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+<center>
 	<form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>}
+		<button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control my-2 col-sm-8" type="text" placeholder="Organization Name" aria-label="Search">  
+    </form>
+<br/>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Full Name</th>
+		<th>Description</th>
+		<th>Subscribe</th>
+	</tr>
+    {% for item in Orgs %}
+    <tr> 
+		<td>{{ item.Short_Name }}</td>
+		<td>{{ item.Full_Name }}</td>
+		<td>{{ item.Description }}</td>
+		<td><button type="button" class="btn btn-danger">Unsubsribed</button></td>
+		<td><button type="button" class="btn btn-success">Subsribed</button></td>
+	</tr>
+    {% endfor %}
+</table>
+</center>
 
 {% endblock %}
