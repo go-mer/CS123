@@ -46,8 +46,12 @@ def registerView(request):
     return render(request,'events/register.html',{'form':form})
 	
 def searchView(request):
-    moderator = Moderator.objects.filter(User=request.user)
-    return render(request,'events/search.html',{'moderator':moderator})
+    query = request.GET.get('q')
+    if query:
+        results = Organization.objects.filter(Q(Full_Name__icontains=query) | Q(Short_Name__icontains=query))
+    else:
+        results = Organization.objects.filter()
+    return render(request,'events/search.html',{'results':results})
     
 def homepage(request):
     moderator = Moderator.objects.filter(User=request.user)
@@ -64,11 +68,6 @@ def viewEvent(request):
     id = request.GET.get('id')
     event = Event.objects.filter(Event_ID=id)
     return render(request,'events/viewEvent.html',{'event':event})
-
-def search(request):
-	query = request.GET.get('q')
-	results = Organization.objects.filter(Q(Full_Name_icontains=query) | Q(Short_Name_icontains=query))
-	return render(request, 'events/searchResult.html',{'results':results})
 	
 def OrgReqFormView(request):
     if request.method == 'POST':

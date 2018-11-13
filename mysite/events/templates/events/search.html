@@ -19,9 +19,9 @@ tr:nth-child(even) {
 }
 </style>
 <center>
-	<form class="form-inline my-2 my-lg-0">
+	<form id="searchform" method="get" class="form-inline my-2 my-lg-0">
 		<button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-        <input class="form-control my-2 col-sm-8" type="text" placeholder="Organization Name" aria-label="Search">  
+        <input class="form-control my-2 col-sm-8" type="text" name="q" placeholder="Organization Name" aria-label="Search">
     </form>
 <br/>
 <table>
@@ -31,7 +31,7 @@ tr:nth-child(even) {
 		<th>Description</th>
 		<th>Subscribe</th>
 	</tr>
-    {% for item in Orgs %}
+    {% for item in results %}
     <tr> 
 		<td>{{ item.Short_Name }}</td>
 		<td>{{ item.Full_Name }}</td>
