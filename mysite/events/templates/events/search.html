@@ -36,8 +36,11 @@ tr:nth-child(even) {
 		<td>{{ item.Short_Name }}</td>
 		<td>{{ item.Full_Name }}</td>
 		<td>{{ item.Description }}</td>
-		<td><button type="button" class="btn btn-danger">Unsubsribed</button></td>
-		<td><button type="button" class="btn btn-success">Subsribed</button></td>
+		{% if not moderator.exists %}
+        <td><button type="button" class="btn btn-danger">Unsubsribed</button></td>
+        {% else %}
+        <td><button type="button" class="btn btn-success">Subsribed</button></td>       
+        {% endif %}
 	</tr>
     {% endfor %}
 </table>
