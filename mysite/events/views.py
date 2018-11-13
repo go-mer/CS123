@@ -46,12 +46,14 @@ def registerView(request):
     return render(request,'events/register.html',{'form':form})
 	
 def searchView(request):
+    subs = Subscription.objects.filter(User=request.user)
+    subedOrgs = Organization.objects.filter(Org_ID__in=subs.values('Org_ID'))
     query = request.GET.get('q')
     if query:
         results = Organization.objects.filter(Q(Full_Name__icontains=query) | Q(Short_Name__icontains=query))
     else:
         results = Organization.objects.filter()
-    return render(request,'events/search.html',{'results':results})
+    return render(request,'events/search.html',{'results':results, 'subscribed':subedOrgs})
     
 def homepage(request):
     moderator = Moderator.objects.filter(User=request.user)
