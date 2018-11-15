@@ -16,14 +16,16 @@
 	<link href="{% static 'css/signin.css' %}" rel="stylesheet">
 </head>
 <body class="text-center">
-	<form class="form-signin" method="get">
-		<h1>{{event.Name}}</h1>
+	<form class="form-signin" method="post" novalidate>
+		<h1>{{ event.Name }}</h1>
+		<h3>{{ org }}</h3>
 		<h3>{{event.Date}}
 			{{event.Time}}</h3>
 		<h3>{{event.Venue}}</h3>
 		<h4>{{event.Description}}</h4>
-        <input class="form-control " type="text" name="evalCode" placeholder="Eval Form Code" aria-label="Search">
-        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:25px">Submit</button>
+		{% csrf_token %}
+		{% render_field form.Eval_Key class="form-control" placeholder="Evaluation Key" style="margin-bottom:20px" %}
+		<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:25px">Evaluate</button>
 	</form>
 </body>
 {% endblock %}

@@ -1,5 +1,4 @@
 from django import forms
-from bootstrap4_datetime.widgets import DateTimePicker
 from django.contrib.auth.models import User
 
 class RegisterForm(forms.Form):
@@ -56,8 +55,8 @@ class OrgReqForm(forms.Form):
 			
 class EventForm(forms.Form):
     Name = forms.CharField(max_length=50)
-    Date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
-    Time = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time'}))
+    Date = forms.DateField()
+    Time = forms.TimeField()
     Venue = forms.CharField(max_length=20)
     Description = forms.CharField(widget=forms.Textarea)
     Eval_Key = forms.CharField(max_length=15)
@@ -71,4 +70,30 @@ class EventForm(forms.Form):
         Description = cleaned_data.get('Description')
         Eval_Key = cleaned_data.get('Eval_Key')
         if not Name and not Date and not Time and not Venue and not Description and not Eval_Key:
+            raise forms.ValidationError('You have to write something!')
+
+class ViewEventForm(forms.Form):
+    Eval_Key = forms.CharField(max_length=15)
+	
+    def clean(self):
+        cleaned_data = super(ViewEventForm, self).clean()
+        Eval_Key = cleaned_data.get('Eval_Key')
+        if not Eval_Key:
+            raise forms.ValidationError('You have to write something!')
+			
+class Evaluation(forms.Form):
+    Rating = forms.IntegerField(min_value=0, max_value=10)
+    Strengths = forms.CharField(widget=forms.Textarea)
+    Suggestions = forms.CharField(widget=forms.Textarea)
+    Learnings = forms.CharField(widget=forms.Textarea)
+    Comments = forms.CharField(widget=forms.Textarea)
+
+    def clean(self):
+        cleaned_data = super(Evaluation, self).clean()
+        Rating = cleaned_data.get('Rating')
+        Strengths = cleaned_data.get('Strengths')
+        Suggestions = cleaned_data.get('Suggestions')
+        Learnings = cleaned_data.get('Learnings')
+        Comments = cleaned_data.get('Comments')
+        if not Rating and not Strengths and not Suggestions and not Learnings and not Comments:
             raise forms.ValidationError('You have to write something!')

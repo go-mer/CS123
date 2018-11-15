@@ -17,16 +17,15 @@
 </head>
 <body class="text-center">
 	<form class="form-signin" method="post" novalidate>
-		<h1 style="margin-top:30px">Schedule Event</h1>
-		<h5 style="margin-top:-10px">{{ org }}<h5>
+		<h1 style="margin-top:30px">Event Evaluation</h1>
+		<h5 style="margin-top:-10px">{{ event }}<h5>
 		<br>
 		{% csrf_token %}
-		{% render_field form.Name class="form-control" placeholder="Name" style="margin-bottom:20px" %}
-		{% render_field form.Date class="form-control" placeholder="Date" style="margin-bottom:20px" %}
-		{% render_field form.Time class="form-control" placeholder="Time" style="margin-bottom:20px" %}
-		{% render_field form.Venue class="form-control" placeholder="Venue" style="margin-bottom:20px" %}
-		{% render_field form.Description class="form-control" placeholder="Description" style="margin-bottom:20px" %}
-		{% render_field form.Eval_Key class="form-control" placeholder="Eval_Key" style="margin-bottom:20px" %}
+		{% render_field form.Rating class="form-control" placeholder="Rating" style="margin-bottom:20px" %}
+		{% render_field form.Strengths class="datepicker form-control" placeholder="Strengths" style="margin-bottom:20px" %}
+		{% render_field form.Suggestions class="clockpicker form-control" placeholder="Suggestions" style="margin-bottom:20px" %}
+		{% render_field form.Learnings class="form-control" placeholder="Learnings" style="margin-bottom:20px" %}
+		{% render_field form.Comments class="form-control" placeholder="Comments" style="margin-bottom:20px" %}
 		<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:25px">Submit</button>
 	</form>
 </body>

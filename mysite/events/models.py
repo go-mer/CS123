@@ -29,19 +29,7 @@ class Event(models.Model):
 class EvalForm(models.Model):
 	User = models.ForeignKey(User, on_delete=models.CASCADE, blank=False) 
 	Event_ID = models.ForeignKey(Event, on_delete=models.CASCADE, blank=False)
-	Rating = (
-		(0),
-		(1),
-		(2),
-		(3),
-		(4),
-		(5),
-		(6),
-		(7),
-		(8),
-		(9),
-		(10),
-	)
+	Rating = models.IntegerField(default=10)
 	Strengths = models.TextField()
 	Suggestions = models.TextField()
 	Learnings = models.TextField()

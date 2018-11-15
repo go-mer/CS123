@@ -1,16 +1,17 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import RedirectView
-from .models import Organization, Moderator, Subscription, Event
+from .models import Organization, Moderator, Subscription, Event, EvalForm
 from django_tables2 import RequestConfig
 from django.contrib.auth.models import User
 from django.views.generic import FormView
-from .forms import RegisterForm, OrgReqForm, EventForm
+from .forms import RegisterForm, OrgReqForm, EventForm, ViewEventForm, Evaluation
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from django.test import Client
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
+from django.urls import reverse
 
 def loginView(request):
     if request.method == 'POST':
@@ -45,12 +46,18 @@ def registerView(request):
     return render(request,'events/register.html',{'form':form})
 	
 def homepage(request):
+    if request.user.is_authenticated:
+        modOrgs = Moderator.objects.filter(User=request.user)
+        modOrg = Organization.objects.filter(Org_ID__in=modOrgs.values('Org_ID'))
+        mod = modOrg.filter(Approved=True)
+        return render(request,'events/homepage.html',{'moderator':mod})
+    else:
+        return redirect('Login')
+	
+def searchView(request):
     modOrgs = Moderator.objects.filter(User=request.user)
     modOrg = Organization.objects.filter(Org_ID__in=modOrgs.values('Org_ID'))
     mod = modOrg.filter(Approved=True)
-    return render(request,'events/homepage.html',{'moderator':mod})
-	
-def searchView(request):
     subs = Subscription.objects.filter(User=request.user)
     subedOrgs = Organization.objects.filter(Org_ID__in=subs.values('Org_ID'))
     query = request.GET.get('q')
@@ -58,7 +65,7 @@ def searchView(request):
         results = Organization.objects.filter(Q(Full_Name__icontains=query) | Q(Short_Name__icontains=query))
     else:
         results = Organization.objects.filter()
-    return render(request,'events/search.html',{'results':results, 'subscribed':subedOrgs})
+    return render(request,'events/search.html',{'results':results,'subscribed':subedOrgs,'moderator':mod})
 
 def myOrgs(request):
     modOrgs = Moderator.objects.filter(User=request.user)
@@ -69,14 +76,26 @@ def myOrgs(request):
     orgs = subedOrgs.filter(Approved=True)
     return render(request,'events/myOrgs.html',{'orgs':orgs,'moderator':mod})
 	
-def viewEvent(request):
-    evalCode = request.GET.get('evalCode')
-    id = 1
-    event = Event.objects.filter(Event_ID=id).first()
-    
-    #if evalCode == event.Eval_Key:
-     #   id = 2
-    return render(request,'events/viewEvent.html',{'event':event})
+def viewEvent(request,id):
+    modOrgs = Moderator.objects.filter(User=request.user)
+    modOrg = Organization.objects.filter(Org_ID__in=modOrgs.values('Org_ID'))
+    mod = modOrg.filter(Approved=True)
+    event = Event.objects.get(pk=id)
+    org = event.Org_ID.Short_Name
+    if request.method == 'POST':
+        form = ViewEventForm(request.POST)
+        request.session['id'] = id
+        return redirect('Eval')
+        if form.is_valid():
+            data = request.POST.copy()
+            evalkey = data.get('Eval_Key')
+            if evalkey == event.Eval_Key:
+                return redirect('Eval',{'eventPK':id})
+            else:
+                return viewEvent(request,id)
+    else:
+        form = ViewEventForm()
+    return render(request,'events/viewEvent.html',{'form':form,'event':event,'org':org,'moderator':mod})
 	
 def OrgReqFormView(request):
     modOrgs = Moderator.objects.filter(User=request.user)
@@ -91,8 +110,8 @@ def OrgReqFormView(request):
             Description = data.get('Description')
             User = request.user
             Org = Organization.objects.create(Short_Name=Short_Name, Full_Name=Full_Name, Description=Description)
-            Mod = Moderator.objects.create(User=User, Org_ID=Org)
-            return HttpResponseRedirect('/events/homepage')
+            Moderatr = Moderator.objects.create(User=User, Org_ID=Org)
+            return redirect('Homepage')
     else:
         form = OrgReqForm()
     return render(request, 'events/requestOrg.html',{'form':form,'moderator':mod})
@@ -115,7 +134,31 @@ def EventFormView(request):
             Description = data.get('Description')
             Eval_Key = data.get('Eval_Key')
             event = Event.objects.create(Name=Name, Date=Date, Time=Time, Venue=Venue, Description=Description, Org_ID=Org_ID, Eval_Key=Eval_Key)
-            return HttpResponseRedirect('/events/homepage') 
+            return redirect('Homepage')
     else:
         form = EventForm()
     return render(request, 'events/scheduleEvent.html',{'form':form,'org':Org,'moderator':mod})
+	
+def EvalFormView(request):
+    modOrgs = Moderator.objects.filter(User=request.user)
+    modOrg = Organization.objects.filter(Org_ID__in=modOrgs.values('Org_ID'))
+    mod = modOrg.filter(Approved=True)
+    eventPK = request.session['id']
+    del request.session['id']
+    eventObject = Event.objects.get(pk=eventPK)
+    event = eventObject.Name
+    if request.method == 'POST':
+        form = Evaluation(request.POST)
+        if form.is_valid():
+            data = request.POST.copy()
+            Rating = data.get('Rating')
+            Strengths = data.get('Strengths')
+            Suggestions = data.get('Suggestions')
+            Learnings = data.get('Learnings')
+            Comments = data.get('Comments')
+            User = request.user
+            eval = EvalForm.objects.create(Rating=Rating, Strengths=Strengths, Suggestions=Suggestions, Learnings=Learnings, Comments=Comments, User=User, Event_ID=eventObject)
+            return redirect('Homepage')
+    else:
+        form = Evaluation()
+    return render(request, 'events/eval.html',{'form':form,'event':event,'moderator':mod})
