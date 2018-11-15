@@ -2,20 +2,20 @@
 {% load widget_tweaks %}
 {% block content %}
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="{% static 'favicon.ico' %}">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="{% static 'favicon.ico' %}">
 
-<!-- Bootstrap core CSS -->
-<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- Bootstrap core CSS -->
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-<!-- Custom styles for this template -->
-<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="{% static 'css/signin.css' %}" rel="stylesheet">
 </head>
-
 <body class="text-center">
+	<a class="btn btn-primary" href="{% url 'Login' %}" style="top:20px; left:20px; position:absolute">Cancel</a>	
 	<form class="form-signin" method="post">
 		<h1 class="h3 mb-3 font-weight-normal">Register</h1>
 		{% csrf_token %}

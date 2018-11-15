@@ -54,18 +54,20 @@ class OrgReqForm(forms.Form):
 			raise forms.ValidationError('You have to write something!')
 			
 class EventForm(forms.Form):
-	Name = forms.CharField(max_length=50)
-	Date_Time = forms.DateTimeField()
-	Venue = forms.CharField(max_length=20)
-	Description = forms.CharField(widget=forms.Textarea)
-	Eval_Key = forms.CharField(max_length=15)
-	
-	def clean(self):
-		cleaned_data = super(EventForm, self).clean()
-		Name = cleaned_data.get('Name')
-		Date_Time = cleaned_data.get('Date_Time')
-		Venue = cleaned_data.get('Venue')
-		Description = cleaned_data.get('Description')
-		Eval_Key = cleaned_data.get('Eval_Key')
-		if not Name and not Date_Time and not Venue and not Description and not Eval_Key:
-			raise forms.ValidationError('You have to write something!')
+    Name = forms.CharField(max_length=50)
+    Date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    Time = forms.TimeField()
+    Venue = forms.CharField(max_length=20)
+    Description = forms.CharField(widget=forms.Textarea)
+    Eval_Key = forms.CharField(max_length=15)
+
+    def clean(self):
+        cleaned_data = super(EventForm, self).clean()
+        Name = cleaned_data.get('Name')
+        Date = cleaned_data.get('Date')
+        Time = cleaned_data.get('Time')
+        Venue = cleaned_data.get('Venue')
+        Description = cleaned_data.get('Description')
+        Eval_Key = cleaned_data.get('Eval_Key')
+        if not Name and not Date_Time and not Venue and not Description and not Eval_Key:
+            raise forms.ValidationError('You have to write something!')

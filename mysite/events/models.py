@@ -19,7 +19,8 @@ class Subscription(models.Model):
 class Event(models.Model):
 	Event_ID = models.BigAutoField(primary_key=True)
 	Name = models.CharField(max_length=50, blank=False)
-	Date_Time = models.DateTimeField(auto_now=False, auto_now_add=False, blank=False)
+	Date = models.DateField(auto_now=False, auto_now_add=False, blank=False)
+	Time = models.TimeField(auto_now=False, auto_now_add=False, blank=False)
 	Venue = models.CharField(max_length=20, blank=False)
 	Description = models.TextField()
 	Org_ID = models.ForeignKey(Organization, on_delete=models.CASCADE, blank=False)

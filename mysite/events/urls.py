@@ -6,11 +6,11 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^login/$', views.loginView, name='Login'),
     url(r'^logout/$', views.logoutView, name='Logout'),
-	url(r'^register/$', views.registerView, name='Register'),
+    url(r'^register/$', views.registerView, name='Register'),
     path('admin/', admin.site.urls),
-	url(r'^homepage/$', views.homepage, name='Homepage'),
-	url(r'^orgReq/$', views.OrgReqFormView, name='OrgReq'),
+    url(r'^homepage/$', views.homepage, name='Homepage'),
+    url(r'^orgReq/$', views.OrgReqFormView, name='OrgReq'),
     url(r'^myOrgs/$', views.myOrgs, name='MyOrgs'),
-	url(r'^eventSched/$', views.EventFormView, name='EventSched'),
-	url(r'^search/$', views.searchView, name='Search'),
+    url(r'^eventSched/$', views.EventFormView, name='EventSched'),
+    url(r'^search/$', views.searchView, name='Search'),
 ]
