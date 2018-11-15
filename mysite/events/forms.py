@@ -1,4 +1,5 @@
 from django import forms
+from bootstrap4_datetime.widgets import DateTimePicker
 from django.contrib.auth.models import User
 
 class RegisterForm(forms.Form):
@@ -69,5 +70,5 @@ class EventForm(forms.Form):
         Venue = cleaned_data.get('Venue')
         Description = cleaned_data.get('Description')
         Eval_Key = cleaned_data.get('Eval_Key')
-        if not Name and not Date_Time and not Venue and not Description and not Eval_Key:
+        if not Name and not Date and not Time and not Venue and not Description and not Eval_Key:
             raise forms.ValidationError('You have to write something!')
