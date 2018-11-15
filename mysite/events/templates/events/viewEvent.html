@@ -17,13 +17,15 @@
 </head>
 <body class="text-center">
 	<form class="form-signin" method="get">
-		<h1>{{ event.Name }}</h1>
-		<div>
-			{{event.Date}}
-
-		</div>
-        <input class="form-control my-2 col-sm-8" type="text" name="q" placeholder="Eval Form Code" aria-label="Search">
+		{% for item in event %}
+		<h1>{{ item.Name }}</h1>
+		<h3>{{item.Date}}
+			{{item.Time}}</h3>
+		<h3>{{item.Venue}}</h3>
+		<h4>{{item.Description}}</h4>
+        <input class="form-control " type="text" name="evalCode" placeholder="Eval Form Code" aria-label="Search">
         <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:25px">Submit</button>
+         {% endfor %}
 	</form>
 </body>
 {% endblock %}

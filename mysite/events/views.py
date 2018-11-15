@@ -70,8 +70,11 @@ def myOrgs(request):
     return render(request,'events/myOrgs.html',{'orgs':orgs,'moderator':mod})
 	
 def viewEvent(request):
+    evalCode = request.Get.get('evalCode')
     id = 1
     event = Event.objects.filter(Event_ID=id)
+    if evalCode == event[1].get('Eval_Key'):
+        
     return render(request,'events/viewEvent.html',{'event':event})
 	
 def OrgReqFormView(request):
