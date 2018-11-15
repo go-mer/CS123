@@ -70,7 +70,7 @@ def myOrgs(request):
     return render(request,'events/myOrgs.html',{'orgs':orgs,'moderator':mod})
 	
 def viewEvent(request):
-    id = request.GET.get('id')
+    id = 1
     event = Event.objects.filter(Event_ID=id)
     return render(request,'events/viewEvent.html',{'event':event})
 	
