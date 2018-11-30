@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+<center>
+	<form id="searchform" method="get" class="form-inline my-2 my-lg-0">
+		<button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control my-2 col-sm-8" type="text" name="q" placeholder="Organization Name" aria-label="Search">
+    </form>
+<br/>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Full Name</th>
+		<th>Description</th>
+		<th>Subscribe</th>
+	</tr>
+    {% for item in results %}
+    <tr> 
+		<td>{{ item.Short_Name }}</td>
+		<td>{{ item.Full_Name }}</td>
+		<td>{{ item.Description }}</td>
+		<form class="form-signin" method="post" novalidate>
+			{% csrf_token %}
+			{% if item not in subscribed %}
+				<input type="hidden" value="Subscribe" name="Sub" />
+				<input type="hidden" value="{{ item.pk }}" name="Org" />
+				<td><button type="submit" class="btn btn-success">Subsribe</button></td>
+			{% else %}
+				<input type="hidden" value="Unsubscribe" name="Sub" />
+				<input type="hidden" value="{{ item.pk }}" name="Org" />
+				<td><button type="submit" class="btn btn-danger">Unsubsribe</button></td>       
+			{% endif %}
+		</form>
+	</tr>
+    {% endfor %}
+</table>
+</center>
+
+{% endblock %}
