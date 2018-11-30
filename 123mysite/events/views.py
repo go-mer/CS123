@@ -12,6 +12,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.urls import reverse
+from django.core import serializers
 
 def loginView(request):
     if request.method == 'POST':
@@ -50,7 +51,9 @@ def homepage(request):
         modOrgs = Moderator.objects.filter(User=request.user)
         modOrg = Organization.objects.filter(Org_ID__in=modOrgs.values('Org_ID'))
         mod = modOrg.filter(Approved=True)
-        return render(request,'events/homepage.html',{'moderator':mod})
+        subs = Subscription.objects.filter(User=request.user)
+        events = Event.objects.filter(Org_ID__in=subs.values('Org_ID'))
+        return render(request,'events/homepage.html',{'moderator':mod,'events':events})
     else:
         return redirect('Login')
 	

@@ -21,14 +21,25 @@
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
 			var calendarEl = document.getElementById('calendar');
+			var data = [];
+			var headers = [];
+			for (var i=0; i<mytab1.rows[0].cells.length; i++) {
+				headers[i] = mytab1.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+			}
+			for (var i=1; i<mytab1.rows.length; i++) {
+				var tableRow = mytab1.rows[i];
+				var rowData = {};
+				for (var j=0; j<tableRow.cells.length; j++) {
+					rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+				}
+				data.push(rowData);
+			} 
 			var calendar = new FullCalendar.Calendar(calendarEl, {
-				editable: true,
 				eventLimit: true, // allow "more" link when too many events
-				events: []
+				events: data
 			});
 				calendar.render();
 		});
-		
 	</script>
 	<style>
 		#calendar {
@@ -38,6 +49,19 @@
 	</style>
 </head>	
 <body>
+	<table id="mytab1">
+		<tr>
+			<th>title</th>
+			<th>start</th>
+		</tr>
+		<tr>
+		{% for event in events %}
+		<tr> 
+			<td>{{ event.Name }}</td>
+			<td>{{ event.Date }}</td>
+		</tr>
+		{% endfor %}
+	</table>
 	<center>
 		<table border="20" cellspacing="10" cellpadding="15">
 		<br>
