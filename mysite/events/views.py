@@ -1,3 +1,4 @@
+import csv
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import RedirectView
 from .models import Organization, Moderator, Subscription, Event, EvalForm
@@ -162,3 +163,15 @@ def EvalFormView(request):
     else:
         form = Evaluation()
     return render(request, 'events/eval.html',{'form':form,'event':event,'moderator':mod})
+
+def export_users_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="evals.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['User', 'Rating', 'Strengths', 'Suggestions', 'Learnings', 'Comments'])
+
+    evalForms = EvalForm.objects.all().values_list('User', 'Rating', 'Strengths', 'Suggestions', 'Learnings', 'Comments')
+    for evalForm in evalForms:
+        writer.writerow(evalForm)
+    return response

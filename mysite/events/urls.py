@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^viewEvent/$', views.viewEvent, {'id':1}, name='ViewEvent'),
     url(r'^search/$', views.searchView, name='Search'),
     url(r'^eval/$', views.EvalFormView, name='Eval'),
+    url(r'^export/csv/$', views.export_users_csv, name='export_users_csv'),
 ]
