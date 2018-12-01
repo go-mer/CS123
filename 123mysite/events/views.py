@@ -103,6 +103,10 @@ def viewEvent(request,id):
         return redirect('Eval')
         if form.is_valid():
             data = request.POST.copy()
+            view = data.get('view')
+            ID = data.get('ID')
+            User = request.user
+            Event_ID = Event.objects.get(Event_ID=ID)
             evalkey = data.get('Eval_Key')
             if evalkey == event.Eval_Key:
                 return redirect('Eval',{'eventPK':id})

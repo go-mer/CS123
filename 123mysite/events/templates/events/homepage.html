@@ -49,16 +49,25 @@
 	</style>
 </head>	
 <body>
-	<table id="mytab1" style="display:none">
+	<table id="mytab1">
 		<tr>
 			<th>title</th>
 			<th>start</th>
+			<th>url</th>
 		</tr>
 		<tr>
 		{% for event in events %}
 		<tr> 
 			<td>{{ event.Name }}</td>
 			<td>{{ event.Date }}</td>
+			<form class="form-signin" method="post" novalidate>
+			{% csrf_token %}
+			{% if event in events %}
+				<input type="hidden" value="Viewed" name="view" />
+				<input type="hidden" value="{{ event.Event_ID }}" name="ID" />
+				<td>http://localhost:8000/events/viewEvent/</td>      
+			{% endif %}
+			</form>
 		</tr>
 		{% endfor %}
 	</table>
