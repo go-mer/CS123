@@ -65,8 +65,9 @@ def searchView(request):
     subedOrgs = Organization.objects.filter(Org_ID__in=subs.values('Org_ID'))
     query = request.GET.get('q')
     if query:
-        results = Organization.objects.filter(Q(Full_Name__icontains=query) | Q(Short_Name__icontains=query))
-    else:
+        r = Organization.objects.filter(Q(Full_Name__icontains=query) | Q(Short_Name__icontains=query))
+        results = r.filter(Approved=True)
+	else:
         results = Organization.objects.filter()	
     if request.method == 'POST':
         data = request.POST.copy()
@@ -103,10 +104,6 @@ def viewEvent(request,id):
         return redirect('Eval')
         if form.is_valid():
             data = request.POST.copy()
-            view = data.get('view')
-            ID = data.get('ID')
-            User = request.user
-            Event_ID = Event.objects.get(Event_ID=ID)
             evalkey = data.get('Eval_Key')
             if evalkey == event.Eval_Key:
                 return redirect('Eval',{'eventPK':id})
