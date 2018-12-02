@@ -36,7 +36,10 @@
 			} 
 			var calendar = new FullCalendar.Calendar(calendarEl, {
 				eventLimit: true, // allow "more" link when too many events
-				events: data
+				events: data,
+				eventClick: function(event) {
+					document.getElementById("Event_PK").value = event.pk;
+				}
 			});
 				calendar.render();
 		});
@@ -53,14 +56,21 @@
 		<tr>
 			<th>title</th>
 			<th>start</th>
+			<th>pk</th>
 		</tr>
 		<tr>
 		{% for event in events %}
 		<tr> 
 			<td>{{ event.Name }}</td>
 			<td>{{ event.Date }}</td>
+			<td>{{ event.Event_ID }}</td>
 		</tr>
 		{% endfor %}
+		<form class="form-signin" method="post" novalidate>
+			{% csrf_token %}
+			<input id="Event_PK"/>
+			<td><button type="submit" class="btn btn-danger">Unsubsribe</button></td>       
+		</form>
 	</table>
 	<center>
 		<table border="20" cellspacing="10" cellpadding="15">
