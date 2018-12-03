@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="{% static 'favicon.ico' %}">
+	
+	<!-- Bootstrap core CSS -->
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+</head>
+<body class="text-center">
+	<form class="form-signin" method="post" novalidate>
+		<h1 style="margin-top:30px">Schedule Event</h1>
+		<h5 style="margin-top:-10px">{{ org }}<h5>
+		<br>
+		{% csrf_token %}
+		{% render_field form.Name class="form-control" placeholder="Name" style="margin-bottom:20px" %}
+		{% render_field form.Date class="form-control" placeholder="Date" style="margin-bottom:20px" %}
+		{% render_field form.Time class="form-control" placeholder="Time" style="margin-bottom:20px" %}
+		{% render_field form.Venue class="form-control" placeholder="Venue" style="margin-bottom:20px" %}
+		{% render_field form.Description class="form-control" placeholder="Description" style="margin-bottom:20px" %}
+		{% render_field form.Eval_Key class="form-control" placeholder="Eval_Key" style="margin-bottom:20px" %}
+		<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:25px">Submit</button>
+	</form>
+</body>
+{% endblock %}
