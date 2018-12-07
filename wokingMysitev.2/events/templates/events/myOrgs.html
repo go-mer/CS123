@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+	<style>
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+	td, th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+	}
+	th {
+		background-color: #f9f1f1;
+		color: black;
+	}
+	td {
+		background-color: #f9f9f9;
+		color: black;
+	}
+	</style>
+</head>	
+<body style="background-color:#fffff2">
+	<center>
+		<table>
+			<tr>
+				<th>Name</th>
+				<th>Full Name</th>
+				<th>Description</th>
+			</tr>
+			{% for item in moderator %}
+			<tr> 
+				<td>{{ item.Short_Name }}<i class='far fa-check-circle' style="margin-left:10px"></i></td>
+				<td>{{ item.Full_Name }}</td>
+				<td>{{ item.Description }}</td>
+			</tr>
+			{% endfor %}	
+			{% for item in orgs %}
+			<tr> 
+				<td>{{ item.Short_Name }}</td>
+				<td>{{ item.Full_Name }}</td>
+				<td>{{ item.Description }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</center>
+</body>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="{% static 'weffle.png' %}">
+	
+	<!-- Bootstrap core CSS -->
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+</head>
+<body style="background-color:#fffff2" class="text-center" >
+	<form class="form-signin" method="post">
+		<img class="mb-4" src="{% static 'weffle.png' %}" alt="" width="291" height="291">
+		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+		{% csrf_token %}
+		{% render_field form.username class="form-control" placeholder="Username" style="margin-bottom:20px" %}
+		{% render_field form.password class="form-control" placeholder="Password" %}
+		<div class="checkbox mb-3">
+			<label>
+				<input type="checkbox" value="remember-me"> Remember me
+			</label>
+		</div>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom:5px">Sign in</button>
+		Don't have an account yet? <br> Click <a href="{% url 'Register' %}">here</a> to register.
+		<input type="hidden" name="next" value="{{ next }}" />
+	</form>
+</body>
+{% endblock %}

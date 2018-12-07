@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="{% static 'weffle.png' %}">
+	<style>
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
+		td, th {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+		th {
+			background-color: #f9f1f1;
+			color: black;
+		}
+		td {
+			background-color: #f9f9f9;
+			color: black;
+		}
+	</style>
+</head>
+<body style="background-color:#fffff2" class="text-center">
+	<table>
+		<tr>
+			<th>WHAT</th>
+			<td>{{ event.Name }}</td>
+		</tr>
+		<tr>
+			<th>WHO</th>
+			<td>{{ org }}</td>
+		</tr>
+		<tr>
+			<th>WHEN</th>
+			<td>{{ event.Date }} @ {{ event.Time }}</td>
+		</tr>
+		<tr>
+			<th>WHERE</th>
+			<td>{{ event.Venue }}</td>
+		</tr>
+		<tr>
+			<th>WHY</th>
+			<td>{{ event.Description }}</td>
+		</tr>
+	</table>
+	<br>
+	<form class="form-group my-2 my-lg-0" method="post" novalidate>
+		<center>
+			{% csrf_token %}
+			{% render_field form.Eval_Key class="form-control" placeholder="Evaluation Key" style="width: 257px" %}
+			<br>
+			<button class="btn btn-primary my-2 my-sm-0" type="submit" style="margin-top:25px">Evaluate</button>
+			<a class="btn btn-primary my-2 my-sm-0" href="{% url 'export_users_csv' %}" style="center">Get Event Evaluation</a> 
+		</center>
+	</form>
+</body>
+{% endblock %}
