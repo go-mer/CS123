@@ -21,11 +21,11 @@
 		<h5 style="margin-top:-10px">{{ event }}<h5>
 		<br>
 		{% csrf_token %}
-		{% render_field form.Rating class="form-control" placeholder="Rating" style="margin-bottom:20px" %}
-		{% render_field form.Strengths class="datepicker form-control" placeholder="Strengths" style="margin-bottom:20px" %}
-		{% render_field form.Suggestions class="clockpicker form-control" placeholder="Suggestions" style="margin-bottom:20px" %}
-		{% render_field form.Learnings class="form-control" placeholder="Learnings" style="margin-bottom:20px" %}
-		{% render_field form.Comments class="form-control" placeholder="Comments" style="margin-bottom:20px" %}
+		{% render_field form.Rating class="form-control" placeholder="I would rate this activity as a ... (0-10, 10 as the highest)" style="margin-bottom:20px" %}
+		{% render_field form.Strengths class="datepicker form-control" placeholder="I liked this project/activity/event because ..." style="margin-bottom:20px" %}
+		{% render_field form.Suggestions class="clockpicker form-control" placeholder="This project/activity/event would have been more successful if ..." style="margin-bottom:20px" %}
+		{% render_field form.Learnings class="form-control" placeholder="My most significant learning in this project/activity/event is ..." style="margin-bottom:20px" %}
+		{% render_field form.Comments class="form-control" placeholder="Other comments" style="margin-bottom:20px" %}
 		<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:25px">Submit</button>
 	</form>
 </body>
