@@ -22,7 +22,7 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			var calendarEl = document.getElementById('calendar');
 			var data = [];
-			for (var i=1; i<mytab1.rows.length; i++) {
+			for (var i=0; i<mytab1.rows.length; i++) {
 				var tableRow = mytab1.rows[i];
 				var event = {};
 				event["title"] = tableRow.cells[0].innerHTML;
@@ -30,9 +30,8 @@
 				event["url"] = tableRow.cells[2].innerText;
 				data.push(event);
 			} 
-			//document.getElementById("kms").innerHTML = JSON.stringify(data);
 			var calendar = new FullCalendar.Calendar(calendarEl, {
-				eventLimit: true, // allow "more" link when too many events
+				eventLimit: true, 
 				events: data,
 				eventClick: function(event) {
 				}
@@ -48,7 +47,7 @@
 	</style>
 </head>	
 <body style="background-color:#fffff2">
-	<table id="mytab1" style="display:none">
+	<table id="mytab1">
 		{% for event in events %}
 		<tr> 
 			<td>{{ event.Name }}</td>
