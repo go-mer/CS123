@@ -53,7 +53,7 @@
 		</tr>
 	</table>
 	<br>
-	{% if moderator.exists %}
+	{% if moderator.exists and myOrg.Short_Name == org %}
 	<form class="form-group my-2 my-lg-0" novalidate>
 		<center>
 			<a class="btn btn-primary my-2 my-sm-0" href="{% url 'export_users_csv'  %}" style="center">Get Event Evaluation</a> 

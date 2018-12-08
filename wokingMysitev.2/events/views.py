@@ -142,6 +142,10 @@ def viewEvent(request):
     mod = modOrg.filter(Approved=True)
     event = Event.objects.get(pk=id)
     org = event.Org_ID.Short_Name
+    try:
+        myOrg = mod.get(Short_Name=org)
+    except:
+        myOrg = ""
     request.session['id'] = id
     if request.method == 'POST':
         form = ViewEventForm(request.POST)
@@ -152,7 +156,7 @@ def viewEvent(request):
                 return redirect('Eval')
     else:
         form = ViewEventForm()
-    return render(request,'events/viewEvent.html',{'form':form,'event':event,'org':org,'moderator':mod})
+    return render(request,'events/viewEvent.html',{'form':form,'event':event,'org':org,'moderator':mod, 'myOrg':myOrg})
 
 def export_users_csv(request):  
     eventID = request.session['id']
