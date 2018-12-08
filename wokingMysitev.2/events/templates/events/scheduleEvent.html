@@ -26,8 +26,8 @@
 		<br>
 		{% csrf_token %}
 		{% render_field form.Name class="form-control" placeholder="Name" style="margin-bottom:20px" %}
-		{% render_field form.Date class="form-control" placeholder="Date" style="margin-bottom:20px" %}
-		{% render_field form.Time class="form-control" placeholder="Time" style="margin-bottom:20px" %}
+		{% render_field form.Date class="datepicker form-control" placeholder="Date" style="margin-bottom:20px" %}
+		{% render_field form.Time class="clockpicker form-control" placeholder="Time" style="margin-bottom:20px" %}
 		{% render_field form.Venue class="form-control" placeholder="Venue" style="margin-bottom:20px" %}
 		{% render_field form.Description class="form-control" placeholder="Description" style="margin-bottom:20px" %}
 		{% render_field form.Eval_Key class="form-control" placeholder="Eval_Key" style="margin-bottom:20px" %}
