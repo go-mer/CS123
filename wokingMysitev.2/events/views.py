@@ -93,29 +93,28 @@ def myOrgs(request):
     orgs = subedOrgs.filter(Approved=True)
     return render(request,'events/myOrgs.html',{'orgs':orgs,'moderator':mod})
 	
-def EvalFormView(request):
+def EventFormView(request):
     modOrgs = Moderator.objects.filter(User=request.user)
     modOrg = Organization.objects.filter(Org_ID__in=modOrgs.values('Org_ID'))
     mod = modOrg.filter(Approved=True)
-    eventPK = request.session['id']
-    del request.session['id']
-    eventObject = Event.objects.get(pk=eventPK)
-    event = eventObject.Name
+    Moderate = Moderator.objects.get(User=request.user)
+    Org_ID = Moderate.Org_ID
+    Org = Org_ID.Short_Name
     if request.method == 'POST':
-        form = Evaluation(request.POST)
+        form = EventForm(request.POST)
         if form.is_valid():
             data = request.POST.copy()
-            Rating = data.get('Rating')
-            Strengths = data.get('Strengths')
-            Suggestions = data.get('Suggestions')
-            Learnings = data.get('Learnings')
-            Comments = data.get('Comments')
-            User = request.user
-            eval = EvalForm.objects.create(Rating=Rating, Strengths=Strengths, Suggestions=Suggestions, Learnings=Learnings, Comments=Comments, User=User, Event_ID=eventObject)
+            Name = data.get('Name')
+            Date = data.get('Date')
+            Time = data.get('Time')
+            Venue = data.get('Venue')
+            Description = data.get('Description')
+            Eval_Key = data.get('Eval_Key')
+            event = Event.objects.create(Name=Name, Date=Date, Time=Time, Venue=Venue, Description=Description, Org_ID=Org_ID, Eval_Key=Eval_Key)
             return redirect('Homepage')
     else:
-        form = Evaluation()
-    return render(request, 'events/eval.html',{'form':form,'event':event,'moderator':mod})
+        form = EventForm()
+    return render(request, 'events/scheduleEvent.html',{'form':form,'org':Org,'moderator':mod})
 	
 def OrgReqFormView(request):
     modOrgs = Moderator.objects.filter(User=request.user)
