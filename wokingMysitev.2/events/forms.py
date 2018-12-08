@@ -55,8 +55,8 @@ class OrgReqForm(forms.Form):
 			
 class EventForm(forms.Form):
     Name = forms.CharField(max_length=50)
-    Date = forms.DateField()
-    Time = forms.TimeField()
+    Date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    Time = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time'}))
     Venue = forms.CharField(max_length=20)
     Description = forms.CharField(widget=forms.Textarea)
     Eval_Key = forms.CharField(max_length=15)
