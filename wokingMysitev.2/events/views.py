@@ -102,18 +102,39 @@ def viewEvent(request):
     org = event.Org_ID.Short_Name
     if request.method == 'POST':
         form = ViewEventForm(request.POST)
-        request.session['id'] = id
-        return redirect('Eval')
         if form.is_valid():
             data = request.POST.copy()
             evalkey = data.get('Eval_Key')
             if evalkey == event.Eval_Key:
-                return redirect('Eval',{'eventPK':id})
-            else:
-                return viewEvent(request,id)
+                request.session['id'] = id
+                return redirect('Eval')
     else:
         form = ViewEventForm()
     return render(request,'events/viewEvent.html',{'form':form,'event':event,'org':org,'moderator':mod})
+	
+def EvalFormView(request):
+    modOrgs = Moderator.objects.filter(User=request.user)
+    modOrg = Organization.objects.filter(Org_ID__in=modOrgs.values('Org_ID'))
+    mod = modOrg.filter(Approved=True)
+    eventPK = request.session['id']
+    del request.session['id']
+    eventObject = Event.objects.get(pk=eventPK)
+    event = eventObject.Name
+    if request.method == 'POST':
+        form = Evaluation(request.POST)
+        if form.is_valid():
+            data = request.POST.copy()
+            Rating = data.get('Rating')
+            Strengths = data.get('Strengths')
+            Suggestions = data.get('Suggestions')
+            Learnings = data.get('Learnings')
+            Comments = data.get('Comments')
+            User = request.user
+            eval = EvalForm.objects.create(Rating=Rating, Strengths=Strengths, Suggestions=Suggestions, Learnings=Learnings, Comments=Comments, User=User, Event_ID=eventObject)
+            return redirect('Homepage')
+    else:
+        form = Evaluation()
+    return render(request, 'events/eval.html',{'form':form,'event':event,'moderator':mod})
 	
 def OrgReqFormView(request):
     modOrgs = Moderator.objects.filter(User=request.user)
@@ -156,30 +177,6 @@ def EventFormView(request):
     else:
         form = EventForm()
     return render(request, 'events/scheduleEvent.html',{'form':form,'org':Org,'moderator':mod})
-	
-def EvalFormView(request):
-    modOrgs = Moderator.objects.filter(User=request.user)
-    modOrg = Organization.objects.filter(Org_ID__in=modOrgs.values('Org_ID'))
-    mod = modOrg.filter(Approved=True)
-    eventPK = request.session['id']
-    del request.session['id']
-    eventObject = Event.objects.get(pk=eventPK)
-    event = eventObject.Name
-    if request.method == 'POST':
-        form = Evaluation(request.POST)
-        if form.is_valid():
-            data = request.POST.copy()
-            Rating = data.get('Rating')
-            Strengths = data.get('Strengths')
-            Suggestions = data.get('Suggestions')
-            Learnings = data.get('Learnings')
-            Comments = data.get('Comments')
-            User = request.user
-            eval = EvalForm.objects.create(Rating=Rating, Strengths=Strengths, Suggestions=Suggestions, Learnings=Learnings, Comments=Comments, User=User, Event_ID=eventObject)
-            return redirect('Homepage')
-    else:
-        form = Evaluation()
-    return render(request, 'events/eval.html',{'form':form,'event':event,'moderator':mod})
 
 def export_users_csv(request):
     response = HttpResponse(content_type='text/csv')
