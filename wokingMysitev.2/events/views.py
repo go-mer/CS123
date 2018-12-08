@@ -156,10 +156,10 @@ def viewEvent(request):
 
 def export_users_csv(request):  
     eventID = request.session['id']
-    event = Event.objects.get(pk=id)
+    event = Event.objects.get(pk=eventID)
     name = event.Name
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="' + name + ' evals.csv"'
+    response['Content-Disposition'] = 'attachment; filename="' + str(name) + ' Evaluations.csv"'
 
     writer = csv.writer(response)
     writer.writerow(['User', 'Rating', 'Strengths', 'Suggestions', 'Learnings', 'Comments'])
